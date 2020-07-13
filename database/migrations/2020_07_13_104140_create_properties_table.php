@@ -17,7 +17,7 @@ class CreatePropertiesTable extends Migration
             'properties',
             function (Blueprint $table) {
                 $table->id();
-                $table->uuid('guid')->default(null);
+                $table->uuid('guid')->default(0);
                 $table->string('suburb');
                 $table->string('state');
                 $table->string('country');

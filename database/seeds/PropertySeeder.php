@@ -1,7 +1,7 @@
 <?php
 
-use App\Property;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class PropertySeeder extends Seeder
@@ -17,13 +17,13 @@ class PropertySeeder extends Seeder
     {
         try {
             ($fastExcel)->import(
-                storage_path($fileName),
+                $fileName,
                 function ($line) {
-                    return Property::create(
+                    return DB::table('properties')->insert(
                         [
                             'suburb' => $line['Suburb'],
                             'state' => $line['State'],
-                            'country' => $line['Country']
+                            'country' => $line['Counrty']
                         ]
                     );
                 }

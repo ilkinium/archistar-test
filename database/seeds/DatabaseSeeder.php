@@ -19,12 +19,24 @@ class DatabaseSeeder extends Seeder
      * @var AnalyticTypeSeeder
      */
     private $analyticTypeSeeder;
+    /**
+     * @var PropertyAnalyticSeeder
+     */
+    private $propertyAnalyticSeeder;
 
-    public function __construct(FastExcel $fastExcel, PropertySeeder $propertySeeder, AnalyticTypeSeeder $analyticTypeSeeder)
+    /**
+     * DatabaseSeeder constructor.
+     * @param FastExcel $fastExcel
+     * @param PropertySeeder $propertySeeder
+     * @param AnalyticTypeSeeder $analyticTypeSeeder
+     * @param PropertyAnalyticSeeder $propertyAnalyticSeeder
+     */
+    public function __construct(FastExcel $fastExcel, PropertySeeder $propertySeeder, AnalyticTypeSeeder $analyticTypeSeeder, PropertyAnalyticSeeder $propertyAnalyticSeeder)
     {
         $this->fastExcel = $fastExcel;
         $this->propertySeeder = $propertySeeder;
         $this->analyticTypeSeeder = $analyticTypeSeeder;
+        $this->propertyAnalyticSeeder = $propertyAnalyticSeeder;
     }
 
     /**
@@ -34,12 +46,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-//        die(public_path(self::TEST_DATA_FILE_PATH));
         if (!is_file(public_path(self::TEST_DATA_FILE_PATH))){
             throw new Exception('file not found');
         }
         $this->propertySeeder->run(public_path(self::TEST_DATA_FILE_PATH), $this->fastExcel);
-        // $this->call(UserSeeder::class);
+        $this->analyticTypeSeeder->run(public_path(self::TEST_DATA_FILE_PATH), $this->fastExcel);
+        $this->propertyAnalyticSeeder->run(public_path(self::TEST_DATA_FILE_PATH), $this->fastExcel);
     }
 }

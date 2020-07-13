@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Rap2hpoutre\FastExcel\FastExcel;
 
-class AnalyticTypeSeeder extends Seeder
+class PropertyAnalyticSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,15 +16,14 @@ class AnalyticTypeSeeder extends Seeder
     public function run(string $fileName, FastExcel $fastExcel)
     {
         try {
-            ($fastExcel)->sheet(2)->import(
+            ($fastExcel)->sheet(3)->import(
                 $fileName,
                 function ($line) {
-                    return DB::table('analytic_types')->insert(
+                    return DB::table('property_analytics')->insert(
                         [
-                            'name' => $line['name'],
-                            'units' => $line['units'],
-                            'is_numeric' => $line['is_numeric'],
-                            'num_decimal_places' => $line['num_decimal_places']
+                            'property_id' => $line['property_id'],
+                            'analytic_type_id' => $line['anaytic_type_id'],
+                            'value' => $line['value']
                         ]
                     );
                 }
