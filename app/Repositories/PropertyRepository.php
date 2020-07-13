@@ -50,4 +50,49 @@ class PropertyRepository implements Interfaces\PropertyRepositoryInterface
     {
         return $this->find($id)->analyticTypes()->get();
     }
+
+    /**
+     * @param array $data
+     * @param int $propertyId
+     * @return mixed
+     */
+    public function attachAnalytic(array $data, int $propertyId)
+    {
+        return $this->find($propertyId)
+            ->analyticTypes()
+            ->attach([$data['analytic_id'] => ['value' => $data['value']]]);
+    }
+
+    /**
+     * @param array $data
+     * @param int $propertyId
+     * @return mixed
+     */
+    public function updateAttachedAnalytic(array $data, int $propertyId)
+    {
+        return $this->find($propertyId)
+            ->analyticTypes()
+            ->updateExistingPivot($data['analytic_id'], ['value' => $data['value']]);
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function getQueryByCondition($key, $value)
+    {
+        return $this->model->where($key, $value);
+    }
+
+    /**
+     * @param $requestData
+     * @return mixed
+     */
+    public function getIdsByCondition($requestData)
+    {
+        $key = array_key_first($requestData);
+        return $this->getQueryByCondition($key, $requestData[$key])->pluck('id')->toArray();
+    }
+
 }
