@@ -82,7 +82,7 @@ class PropertyRepository implements Interfaces\PropertyRepositoryInterface
      */
     public function getQueryByCondition($key, $value)
     {
-        return $this->model->where($key, $value);
+        return $this->property->where($key, $value);
     }
 
     /**
