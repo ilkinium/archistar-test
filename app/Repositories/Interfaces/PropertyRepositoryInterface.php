@@ -4,7 +4,7 @@
 namespace App\Repositories\Interfaces;
 
 
-use App\Property;
+use App\Models\Property;
 use Illuminate\Support\Collection;
 
 interface PropertyRepositoryInterface

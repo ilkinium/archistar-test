@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class DatabaseSeeder extends Seeder
@@ -31,8 +31,12 @@ class DatabaseSeeder extends Seeder
      * @param AnalyticTypeSeeder $analyticTypeSeeder
      * @param PropertyAnalyticSeeder $propertyAnalyticSeeder
      */
-    public function __construct(FastExcel $fastExcel, PropertySeeder $propertySeeder, AnalyticTypeSeeder $analyticTypeSeeder, PropertyAnalyticSeeder $propertyAnalyticSeeder)
-    {
+    public function __construct(
+        FastExcel $fastExcel,
+        PropertySeeder $propertySeeder,
+        AnalyticTypeSeeder $analyticTypeSeeder,
+        PropertyAnalyticSeeder $propertyAnalyticSeeder
+    ) {
         $this->fastExcel = $fastExcel;
         $this->propertySeeder = $propertySeeder;
         $this->analyticTypeSeeder = $analyticTypeSeeder;
@@ -43,11 +47,12 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * @return void
+     * @throws FileNotFoundException
      */
     public function run()
     {
-        if (!is_file(public_path(self::TEST_DATA_FILE_PATH))){
-            throw new Exception('file not found');
+        if (!is_file(public_path(self::TEST_DATA_FILE_PATH))) {
+            throw new FileNotFoundException('file not found');
         }
         $this->propertySeeder->run(public_path(self::TEST_DATA_FILE_PATH), $this->fastExcel);
         $this->analyticTypeSeeder->run(public_path(self::TEST_DATA_FILE_PATH), $this->fastExcel);

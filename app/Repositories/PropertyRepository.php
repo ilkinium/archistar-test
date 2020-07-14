@@ -4,8 +4,7 @@
 namespace App\Repositories;
 
 
-use App\AnalyticType;
-use App\Property;
+use App\Models\Property;
 use Illuminate\Support\Collection;
 
 class PropertyRepository implements Interfaces\PropertyRepositoryInterface

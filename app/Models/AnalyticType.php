@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ class AnalyticType extends Model
 
     public function properties()
     {
-        return $this->belongsToMany('App\Property', 'property_analytics');
+        return $this->belongsToMany('App\Models\Property', 'property_analytics');
     }
 }
