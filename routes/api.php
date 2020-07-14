@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('api')->group(
+    function () {
+        //Create property route
+        Route::post('/property', 'PropertyController@create');
+        //Assign analytic type to property route
+        Route::post('/property/{id}', 'PropertyController@assignAnalytic');
+        //Update assign analytic type to property route
+        Route::match(['put', 'patch'], '/property/{id}', 'PropertyController@update');
+        //Get all analytics for a property route
+        Route::get('/property/{id}', 'PropertyController@show');
+        //Get analytics summery by query route
+        Route::get('/analyticsSummary', 'PropertyController@index');
+    }
+);
+
