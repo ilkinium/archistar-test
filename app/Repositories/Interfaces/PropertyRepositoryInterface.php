@@ -9,17 +9,48 @@ use Illuminate\Support\Collection;
 
 interface PropertyRepositoryInterface
 {
+    /**
+     * @param int $id
+     * @return Property
+     */
     public function find(int $id): Property;
 
+    /**
+     * @param array $data
+     * @return Property
+     */
     public function create(array $data): Property;
 
+    /**
+     * @param int $id
+     * @return Collection
+     */
     public function getAnalytic(int $id): Collection;
 
-    public function attachAnalytic(array $data, int $propertyId);
+    /**
+     * @param array $data
+     * @param int $propertyId
+     * @return array|null
+     */
+    public function attachAnalytic(array $data, int $propertyId): ?array;
 
-    public function updateAttachedAnalytic(array $data, int $propertyId);
+    /**
+     * @param array $data
+     * @param int $propertyId
+     * @return int|null
+     */
+    public function updateAttachedAnalytic(array $data, int $propertyId): ?int;
 
-    public function getQueryByCondition($key, $value);
+    /**
+     * @param string $key
+     * @param string $value
+     * @return Collection
+     */
+    public function getQueryByCondition(string $key, string $value): Collection;
 
-    public function getIdsByCondition($requestData);
+    /**
+     * @param array $requestData
+     * @return array
+     */
+    public function getIdsByCondition(array $requestData): array;
 }

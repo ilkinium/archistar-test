@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Repositories;
 
@@ -38,7 +39,7 @@ class PropertyRepository implements Interfaces\PropertyRepositoryInterface
      */
     public function create(array $data): Property
     {
-        // TODO: Implement create() method.
+        return $this->property->create($data);
     }
 
     /**
@@ -53,21 +54,21 @@ class PropertyRepository implements Interfaces\PropertyRepositoryInterface
     /**
      * @param array $data
      * @param int $propertyId
-     * @return mixed
+     * @return array|null
      */
-    public function attachAnalytic(array $data, int $propertyId)
+    public function attachAnalytic(array $data, int $propertyId): ?array
     {
         return $this->find($propertyId)
             ->analyticTypes()
-            ->attach([$data['analytic_id'] => ['value' => $data['value']]]);
+            ->syncWithoutDetaching([$data['analytic_id'] => ['value' => $data['value']]]);
     }
 
     /**
      * @param array $data
      * @param int $propertyId
-     * @return mixed
+     * @return int|null
      */
-    public function updateAttachedAnalytic(array $data, int $propertyId)
+    public function updateAttachedAnalytic(array $data, int $propertyId): ?int
     {
         return $this->find($propertyId)
             ->analyticTypes()
@@ -75,22 +76,23 @@ class PropertyRepository implements Interfaces\PropertyRepositoryInterface
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @return mixed
+     * @param string $key
+     * @param string $value
+     * @return Collection
      */
-    public function getQueryByCondition($key, $value)
+    public function getQueryByCondition($key, $value): Collection
     {
         return $this->property->where($key, $value);
     }
 
     /**
-     * @param $requestData
-     * @return mixed
+     * @param array $requestData
+     * @return array
      */
-    public function getIdsByCondition($requestData)
+    public function getIdsByCondition(array $requestData): array
     {
         $key = array_key_first($requestData);
+
         return $this->getQueryByCondition($key, $requestData[$key])->pluck('id')->toArray();
     }
 

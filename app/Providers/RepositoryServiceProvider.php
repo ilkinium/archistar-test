@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\PropertyAnalyticRepositoryInterface;
 use App\Repositories\Interfaces\PropertyRepositoryInterface;
+use App\Repositories\PropertyAnalyticRepository;
 use App\Repositories\PropertyRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +20,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PropertyRepositoryInterface::class,
             PropertyRepository::class
+        );
+        $this->app->bind(
+            PropertyAnalyticRepositoryInterface::class,
+            PropertyAnalyticRepository::class
         );
     }
 
