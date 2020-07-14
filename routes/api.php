@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,14 +17,14 @@ Route::middleware('api')->group(
     function () {
         //Create property route
         Route::post('/property', 'PropertyController@create');
-        //Assign analytic type to property route
-        Route::post('/property/{id}', 'PropertyController@assignAnalytic');
-        //Update assign analytic type to property route
-        Route::match(['put', 'patch'], '/property/{id}', 'PropertyController@update');
-        //Get all analytics for a property route
+        //Assign analytic type to a property route
+        Route::post('/property/{id}/analytic', 'PropertyController@assignAnalytic');
+        //Update analytic type with given property id route
+        Route::match(['put', 'patch'], '/property/{id}/analytic', 'PropertyController@update');
+        //Get all analytics for an inputted property route
         Route::get('/property/{id}', 'PropertyController@show');
-        //Get analytics summery by query route
-        Route::get('/analyticsSummary', 'PropertyController@index');
+        //Get analytics summary by query(conditions) route
+        Route::post('/analytics-summary', 'PropertyController@index');
     }
 );
 
